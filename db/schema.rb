@@ -20,8 +20,11 @@ ActiveRecord::Schema.define(version: 2020_11_19_044722) do
     t.string "city"
     t.string "state"
     t.string "zip"
+    t.string "addressable_type"
+    t.bigint "addressable_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["addressable_type", "addressable_id"], name: "index_addresses_on_addressable_type_and_addressable_id"
   end
 
 end
