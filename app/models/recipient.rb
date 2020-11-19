@@ -10,6 +10,6 @@
 #  updated_at :datetime         not null
 #
 class Recipient < ApplicationRecord
-  has_one :address, as: :addressable
-  validates :name, presence: true
+  has_one :address, as: :addressable, dependent: :destroy
+  validates :name, :address, presence: true
 end

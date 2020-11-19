@@ -11,5 +11,5 @@
 #
 class School < ApplicationRecord
   has_one :address, as: :addressable
-  validates :name, presence: true
+  validates :name, :address, presence: true
 end
