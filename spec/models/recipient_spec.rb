@@ -17,7 +17,7 @@ require 'rails_helper'
 RSpec.describe Recipient, type: :model do
   describe 'references' do
     it { should have_one(:address) }
-    it { should belong_to(:school) } 
+    it { should belong_to(:school) }
   end
 
   describe 'validations' do

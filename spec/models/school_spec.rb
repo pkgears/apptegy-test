@@ -12,6 +12,7 @@ require 'rails_helper'
 RSpec.describe School, type: :model do
   describe 'references' do
     it { should have_one(:address) }
+    it{ should accept_nested_attributes_for :address }
   end
 
   describe 'validations' do
