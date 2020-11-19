@@ -31,10 +31,11 @@ group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
   gem 'factory_bot'
   gem 'faker'
-  gem 'rspec-rails', '~> 4.0.1'
 end
 
 group :test do
+  gem 'rspec-rails', '~> 4.0.1'
+  gem 'shoulda-matchers', '~> 4.0'
   gem 'simplecov', require: false
 end
 
