@@ -1,6 +1,9 @@
 class CreateOrders < ActiveRecord::Migration[6.0]
   def change
-    create_table :orders, &:timestamps
+    create_table :orders do |t|
+      t.belongs_to :school, indez: true
+      t.timestamps
+    end
 
     create_table :gifts_orders do |t|
       t.belongs_to :gift

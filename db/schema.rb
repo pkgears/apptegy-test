@@ -43,8 +43,10 @@ ActiveRecord::Schema.define(version: 2020_11_19_053837) do
   end
 
   create_table "orders", force: :cascade do |t|
+    t.bigint "school_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["school_id"], name: "index_orders_on_school_id"
   end
 
   create_table "orders_recipients", force: :cascade do |t|
@@ -58,8 +60,10 @@ ActiveRecord::Schema.define(version: 2020_11_19_053837) do
 
   create_table "recipients", force: :cascade do |t|
     t.string "name"
+    t.bigint "school_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["school_id"], name: "index_recipients_on_school_id"
   end
 
   create_table "schools", force: :cascade do |t|
