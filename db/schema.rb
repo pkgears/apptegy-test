@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_19_053557) do
+ActiveRecord::Schema.define(version: 2020_11_19_053837) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -31,6 +31,29 @@ ActiveRecord::Schema.define(version: 2020_11_19_053557) do
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "gifts_orders", force: :cascade do |t|
+    t.bigint "gift_id"
+    t.bigint "order_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["gift_id"], name: "index_gifts_orders_on_gift_id"
+    t.index ["order_id"], name: "index_gifts_orders_on_order_id"
+  end
+
+  create_table "orders", force: :cascade do |t|
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "orders_recipients", force: :cascade do |t|
+    t.bigint "recipient_id"
+    t.bigint "order_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["order_id"], name: "index_orders_recipients_on_order_id"
+    t.index ["recipient_id"], name: "index_orders_recipients_on_recipient_id"
   end
 
   create_table "recipients", force: :cascade do |t|
