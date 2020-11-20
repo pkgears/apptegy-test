@@ -2,6 +2,11 @@ class Api::V1::SchoolsController < ApplicationController
   include Addressable
   before_action :set_school, only: %i[show update destroy]
 
+  def index
+    @schools = School.all
+    render json: @schools, each_serializer: Api::V1::SchoolSerializer
+  end
+
   def show
     render json: @school, serializer: Api::V1::SchoolSerializer
   end

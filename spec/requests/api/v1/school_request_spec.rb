@@ -23,6 +23,14 @@ RSpec.describe 'Schools', type: :request do
 
   let(:school) { create(:school) }
 
+  describe 'GET #index' do
+    it 'returns a list of schools' do
+      create_list(:school, 5)
+      get "#{api_path}/schools"
+      expect(json.size).to eq(5)
+    end
+  end
+
   describe 'GET #show' do
     context 'when response is succesful' do
       it 'returns http success' do

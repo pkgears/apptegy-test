@@ -10,8 +10,9 @@
 #  updated_at :datetime         not null
 #
 class School < ApplicationRecord
+  has_many :recipients
   has_one :address, as: :addressable, dependent: :destroy
-  validates :name, :address, presence: true
-
   accepts_nested_attributes_for :address, allow_destroy: true
+  
+  validates :name, :address, presence: true
 end

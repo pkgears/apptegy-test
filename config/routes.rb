@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
-      resources :schools, only: %i[show create update destroy] do
+      resources :schools do
         patch 'address', on: :member
       end
 
