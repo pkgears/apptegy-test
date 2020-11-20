@@ -16,7 +16,8 @@
 #
 class Recipient < ApplicationRecord
   has_one :address, as: :addressable, dependent: :destroy
-  validates :name, :address, presence: true
-
+  accepts_nested_attributes_for :address, allow_destroy: true
   belongs_to :school
+
+  validates :name, :address, presence: true
 end
