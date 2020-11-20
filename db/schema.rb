@@ -44,6 +44,7 @@ ActiveRecord::Schema.define(version: 2020_11_19_053837) do
 
   create_table "orders", force: :cascade do |t|
     t.bigint "school_id"
+    t.integer "status", default: 0
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["school_id"], name: "index_orders_on_school_id"

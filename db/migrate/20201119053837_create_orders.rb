@@ -1,7 +1,8 @@
 class CreateOrders < ActiveRecord::Migration[6.0]
   def change
     create_table :orders do |t|
-      t.belongs_to :school, indez: true
+      t.belongs_to :school, index: true
+      t.integer :status, default: 0
       t.timestamps
     end
 
