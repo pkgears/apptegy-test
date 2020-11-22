@@ -24,10 +24,12 @@ RSpec.describe 'Recipients', type: :request do
 
   let(:recipient) { create(:recipient) }
 
+  let(:headers) { token_sign_in(create(:user_with_password)) }
+
   describe 'GET #index' do
     it 'returns a list  of  recipiets' do
       create_list(:recipient, 5)
-      get "#{api_path}/recipients"
+      get "#{api_path}/recipients", headers: headers
       expect(json.size).to eq(5)
     end
   end
@@ -35,14 +37,14 @@ RSpec.describe 'Recipients', type: :request do
   describe 'GET #show' do
     context 'when response is succesful' do
       it 'returns http success' do
-        get "#{api_path}/recipients/#{recipient.id}"
+        get "#{api_path}/recipients/#{recipient.id}", headers: headers
         expect(response).to have_http_status(:ok)
       end
     end
 
     context 'when record does not exist' do
       it 'return not found status' do
-        get "#{api_path}/recipients/100"
+        get "#{api_path}/recipients/100", headers: headers
         expect(response).to have_http_status(:not_found)
       end
     end
@@ -51,14 +53,14 @@ RSpec.describe 'Recipients', type: :request do
   describe 'POST #create' do
     context 'with valid params' do
       it 'returns http created' do
-        post "#{api_path}/recipients/", params: { recipient: valid_params }
+        post "#{api_path}/recipients/", params: { recipient: valid_params }, headers: headers
         expect(response).to have_http_status(:created)
       end
     end
 
     context 'with invalid params' do
       it 'returns http unporcessable entity' do
-        post "#{api_path}/recipients/", params: { recipient: invalid_params }
+        post "#{api_path}/recipients/", params: { recipient: invalid_params }, headers: headers
         expect(response).to have_http_status(:unprocessable_entity)
       end
     end
@@ -67,14 +69,14 @@ RSpec.describe 'Recipients', type: :request do
   describe 'PATCH #update' do
     context 'with valid params' do
       it 'when update recipient returns http success' do
-        patch "#{api_path}/recipients/#{recipient.id}", params: { recipient: { name: 'Updated School' } }
+        patch "#{api_path}/recipients/#{recipient.id}", params: { recipient: { name: 'Updated Recipient' } }, headers: headers
         expect(response).to have_http_status(:success)
       end
     end
 
     context 'with invalid params' do
       it 'returns http unporcessable entity' do
-        patch "#{api_path}/recipients/#{recipient.id}", params: { recipient: invalid_params }
+        patch "#{api_path}/recipients/#{recipient.id}", params: { recipient: invalid_params }, headers: headers
         expect(response).to have_http_status(:unprocessable_entity)
       end
     end
@@ -83,21 +85,21 @@ RSpec.describe 'Recipients', type: :request do
   describe 'PATCH #address' do
     context 'with valid params' do
       it 'when update recipient returns http success' do
-        patch "#{api_path}/recipients/#{recipient.id}/address", params: { address: { address: 'Updated address' } }
+        patch "#{api_path}/recipients/#{recipient.id}/address", params: { address: { address: 'Updated address' } }, headers: headers
         expect(response).to have_http_status(:success)
       end
     end
 
     context 'with invalid params' do
       it 'returns http unporcessable entity' do
-        patch "#{api_path}/recipients/#{recipient.id}/address", params: { address: { address: nil } }
+        patch "#{api_path}/recipients/#{recipient.id}/address", params: { address: { address: nil } }, headers: headers
         expect(response).to have_http_status(:unprocessable_entity)
       end
     end
 
     context 'when address was not found' do
       it 'returns http not found' do
-        patch "#{api_path}/recipients/10/address", params: { address: { address: nil } }
+        patch "#{api_path}/recipients/10/address", params: { address: { address: nil } }, headers: headers
         expect(response).to have_http_status(:not_found)
       end
     end
@@ -105,7 +107,7 @@ RSpec.describe 'Recipients', type: :request do
 
   describe 'DELETE #destroy' do
     it 'returns http success' do
-      delete "#{api_path}/recipients/#{recipient.id}"
+      delete "#{api_path}/recipients/#{recipient.id}", headers: headers
       expect(response).to have_http_status(:success)
     end
   end

@@ -24,17 +24,19 @@ RSpec.describe 'Api::V1::Orders', type: :request do
 
   let(:order) { create(:order) }
 
+  let(:headers) { token_sign_in(create(:user_with_password)) }
+
   describe 'POST #create' do
     context 'with valid params' do
       it 'returns http created' do
-        post "#{api_path}/orders/", params: { order: valid_params }
+        post "#{api_path}/orders/", params: { order: valid_params }, headers: headers
         expect(response).to have_http_status(:created)
       end
     end
 
     context 'with invalid params' do
       it 'returns http unprocessable entity' do
-        post "#{api_path}/orders/", params: { order: invalid_params }
+        post "#{api_path}/orders/", params: { order: invalid_params }, headers: headers
         expect(response).to have_http_status(:unprocessable_entity)
       end
     end
@@ -43,21 +45,21 @@ RSpec.describe 'Api::V1::Orders', type: :request do
   describe 'PATCH #update' do
     context 'when order does not exist' do
       it 'returns http not found ' do
-        patch "#{api_path}/orders/100", params: { order: { name: 'Updated School' } }
+        patch "#{api_path}/orders/100", params: { order: { name: 'Updated School' } }, headers: headers
         expect(response).to have_http_status(:not_found)
       end
     end
 
     context 'with valid params' do
       it 'when update recipient returns http success' do
-        patch "#{api_path}/orders/#{order.id}", params: { order: { name: 'Updated School' } }
+        patch "#{api_path}/orders/#{order.id}", params: { order: { name: 'Updated School' } }, headers: headers
         expect(response).to have_http_status(:success)
       end
     end
 
     context 'with invalid params' do
       it 'returns http unprocessable entity' do
-        patch "#{api_path}/orders/#{order.id}", params: { order: invalid_params }
+        patch "#{api_path}/orders/#{order.id}", params: { order: invalid_params }, headers: headers
         expect(response).to have_http_status(:unprocessable_entity)
       end
     end
@@ -66,7 +68,7 @@ RSpec.describe 'Api::V1::Orders', type: :request do
       it 'returns http unprocessable entity' do
         new_order = order
         new_order.ORDER_SHIPPED!
-        patch "#{api_path}/orders/#{new_order.id}", params: { order: valid_params }
+        patch "#{api_path}/orders/#{new_order.id}", params: { order: valid_params }, headers: headers
         expect(response).to have_http_status(:unprocessable_entity)
       end
     end
@@ -75,7 +77,7 @@ RSpec.describe 'Api::V1::Orders', type: :request do
   describe 'PATCH #ship' do
     context 'when order can change status' do
       it 'returns http success' do
-        patch "#{api_path}/orders/#{order.id}/ship"
+        patch "#{api_path}/orders/#{order.id}/ship", headers: headers
         expect(response).to have_http_status(:success)
       end
     end
@@ -83,7 +85,7 @@ RSpec.describe 'Api::V1::Orders', type: :request do
     context 'when order can change status' do
       it 'returns http unprocessable entity' do
         order.ORDER_SHIPPED!
-        patch "#{api_path}/orders/#{order.id}/ship"
+        patch "#{api_path}/orders/#{order.id}/ship", headers: headers
         expect(response).to have_http_status(:unprocessable_entity)
       end
     end
@@ -92,7 +94,7 @@ RSpec.describe 'Api::V1::Orders', type: :request do
   describe 'PATCH #cancel' do
     context 'when order can change status' do
       it 'returns http success' do
-        patch "#{api_path}/orders/#{order.id}/cancel"
+        patch "#{api_path}/orders/#{order.id}/cancel", headers: headers
         expect(response).to have_http_status(:success)
       end
     end
@@ -100,7 +102,7 @@ RSpec.describe 'Api::V1::Orders', type: :request do
     context 'when order can change status' do
       it 'returns http unprocessable entity' do
         order.ORDER_SHIPPED!
-        patch "#{api_path}/orders/#{order.id}/cancel"
+        patch "#{api_path}/orders/#{order.id}/cancel", headers: headers
         expect(response).to have_http_status(:unprocessable_entity)
       end
     end

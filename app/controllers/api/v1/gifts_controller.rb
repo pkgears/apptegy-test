@@ -36,7 +36,7 @@ class Api::V1::GiftsController < ApplicationController
 
   # DELETE /api/v1/gifts/1
   def destroy
-    @gift.destroy
+    render json: { message: 'Gift deleted' }, status: :ok if @gift.destroy
   end
 
   private

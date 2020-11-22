@@ -3,7 +3,7 @@
 # Table name: orders
 #
 #  id         :bigint           not null, primary key
-#  status     :integer          default('ORDER_RECEIVED")
+#  status     :integer          default("ORDER_RECEIVED")
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #  school_id  :bigint

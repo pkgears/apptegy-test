@@ -22,10 +22,12 @@ RSpec.describe 'Gifts', type: :request do
 
   let(:gift) { create(:gift) }
 
+  let(:headers) { token_sign_in(create(:user_with_password)) }
+
   describe 'GET #index' do
     it 'returns a list of gifts' do
       create_list(:gift, 5)
-      get "#{api_path}/gifts"
+      get "#{api_path}/gifts", headers: headers
       expect(json.size).to eq(5)
     end
   end
@@ -33,14 +35,14 @@ RSpec.describe 'Gifts', type: :request do
   describe 'GET #show' do
     context 'when response is succesful' do
       it 'returns http success' do
-        get "#{api_path}/gifts/#{gift.id}"
+        get "#{api_path}/gifts/#{gift.id}", headers: headers
         expect(response).to have_http_status(:ok)
       end
     end
 
     context 'when record does not exist' do
       it 'return not found status' do
-        get "#{api_path}/gifts/100"
+        get "#{api_path}/gifts/100", headers: headers
         expect(response).to have_http_status(:not_found)
       end
     end
@@ -49,14 +51,14 @@ RSpec.describe 'Gifts', type: :request do
   describe 'POST #create' do
     context 'with valid params' do
       it 'returns http created' do
-        post "#{api_path}/gifts/", params: { gift: valid_params }
+        post "#{api_path}/gifts/", params: { gift: valid_params }, headers: headers
         expect(response).to have_http_status(:created)
       end
     end
 
     context 'with invalid params' do
       it 'returns http unporcessable entity' do
-        post "#{api_path}/gifts/", params: { gift: invalid_params }
+        post "#{api_path}/gifts/", params: { gift: invalid_params }, headers: headers
         expect(response).to have_http_status(:unprocessable_entity)
       end
     end
@@ -65,14 +67,14 @@ RSpec.describe 'Gifts', type: :request do
   describe 'PATCH #update' do
     context 'with valid params' do
       it 'when update gift returns http success' do
-        patch "#{api_path}/gifts/#{gift.id}", params: { gift: { name: 'Updated School' } }
+        patch "#{api_path}/gifts/#{gift.id}", params: { gift: { name: 'Updated School' } }, headers: headers
         expect(response).to have_http_status(:success)
       end
     end
 
     context 'with invalid params' do
       it 'returns http unporcessable entity' do
-        patch "#{api_path}/gifts/#{gift.id}", params: { gift: invalid_params }
+        patch "#{api_path}/gifts/#{gift.id}", params: { gift: invalid_params }, headers: headers
         expect(response).to have_http_status(:unprocessable_entity)
       end
     end
@@ -80,7 +82,7 @@ RSpec.describe 'Gifts', type: :request do
 
   describe 'DELETE #destroy' do
     it 'returns http success' do
-      delete "#{api_path}/gifts/#{gift.id}"
+      delete "#{api_path}/gifts/#{gift.id}", headers: headers
       expect(response).to have_http_status(:success)
     end
   end
