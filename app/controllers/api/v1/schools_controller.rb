@@ -1,9 +1,9 @@
-class Api::V1::SchoolsController < ApplicationController
+class Api::V1::SchoolsController < Api::V1::ApplicationController
   include Addressable
   before_action :set_school, only: %i[show update destroy]
 
   def index
-    @schools = School.all
+    @schools = School.all.includes(:recipients, :address)
     render json: @schools, each_serializer: Api::V1::SchoolSerializer
   end
 

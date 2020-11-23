@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-class Api::V1::RecipientsController < ApplicationController
+class Api::V1::RecipientsController < Api::V1::ApplicationController
   include Addressable
   before_action :set_recipient, only: %i[show update destroy]
 
   def index
-    @recipients = Recipient.all
+    @recipients = Recipient.all.include(:address, :school)
     render json: @recipients, each_serializer: Api::V1::RecipientSerializer
   end
 

@@ -7,7 +7,7 @@ module Addressable
 
     def address
       if @address.update(address_params)
-        render json: @address, serializer: Api::V1::AddressSerializer, status: :ok
+        render json: @object, serializer: "Api::V1::#{model_name}Serializer".constantize, status: :ok
       else
         render json: @address.errors, status: :unprocessable_entity
       end
@@ -21,8 +21,8 @@ module Addressable
   end
 
   def set_address
-    object = model_name.find(params[:id])
-    @address = object.address
+    @object = model_name.find(params[:id])
+    @address = @object.address
   rescue StandardError => e
     render json: { message: e }, status: :not_found
   end

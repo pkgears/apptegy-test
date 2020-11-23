@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Api::V1::OrdersController < ApplicationController
+class Api::V1::OrdersController < Api::V1::ApplicationController
   before_action :set_order, except: %i[create]
 
   def create

@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-class Api::V1::GiftsController < ApplicationController
+class Api::V1::GiftsController < Api::V1::ApplicationController
   before_action :set_gift, only: %i[show update destroy]
 
   # GET /api/v1/gifts
