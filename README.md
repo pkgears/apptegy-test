@@ -1,24 +1,26 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Rails API for Apptegy test
 
-Things you may want to cover:
+## Setup App
 
-* Ruby version
+Ruby version: ```2.5.7```
+Rails version ```6.0.3```
 
-* System dependencies
+1- Install depedencies with
+    ```bundle install```
+2- Setup postgres database 
+ ```
+    rails db:create
+    rails db:migrate
+```
+3- Run app 
+```
+  rails server
+```
 
-* Configuration
+# Testing
 
-* Database creation
+Run command  ``` rspec ``` to run all test and you can open ```./coverage/index.html``` to see test coverage
 
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+#  [API Docs](https://documenter.getpostman.com/view/2636532/TVmHDf3C)
