@@ -5,6 +5,7 @@
 # Table name: recipients
 #
 #  id         :bigint           not null, primary key
+#  email      :string
 #  name       :string
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
@@ -17,6 +18,7 @@
 FactoryBot.define do
   factory :recipient do
     name { Faker::Name.name }
+    email { Faker::Internet.email }
     school
     after(:build) do |recipient|
       recipient.address = build(:address, addressable: recipient)

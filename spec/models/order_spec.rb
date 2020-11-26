@@ -3,7 +3,7 @@
 # Table name: orders
 #
 #  id         :bigint           not null, primary key
-#  status     :integer          default('ORDER_RECEIVED")
+#  status     :integer          default("ORDER_RECEIVED")
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #  school_id  :bigint
@@ -34,12 +34,34 @@ RSpec.describe Order, type: :model do
     end
 
     it 'should return error of recipients limit exceeded' do
-      order = Order.new(school: @school, recipient_ids: @recipients.map(&:id))
+      order = Order.new(school: @school, recipient_ids: @recipients.map(&:id), gift_ids:[create(:gift).id])
+      expect(order.valid?).to be(false)
+    end
+
+    it 'should return error for no one recipient' do
+      order = Order.new(school: @school, recipient_ids: [], gift_ids:[create(:gift).id])
       expect(order.valid?).to be(false)
     end
 
     it 'should return a valid  order' do
-      order = Order.new(school: @school, recipient_ids: @recipients.first(5).map(&:id))
+      order = Order.new(school: @school, recipient_ids: @recipients.first(5).map(&:id), gift_ids:[create(:gift).id])
+      expect(order.valid?).to be(true)
+    end
+  end
+
+  describe '#number_of_gifts' do
+    before do
+      @gifts = create_list(:gift, 5)
+      @school = create(:school)
+    end
+
+    it 'should return error for no one gift' do
+      order = Order.new(school: @school, gift_ids: [], recipient_ids: [create(:recipient).id])
+      expect(order.valid?).to be(false)
+    end
+
+    it 'should return a valid order' do
+      order = Order.new(school: @school, gift_ids: @gifts.map(&:id), recipient_ids: [create(:recipient).id])
       expect(order.valid?).to be(true)
     end
   end

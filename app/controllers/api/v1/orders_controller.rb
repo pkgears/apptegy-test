@@ -37,7 +37,7 @@ class Api::V1::OrdersController < Api::V1::ApplicationController
   end
 
   def order_params
-    params.require(:order).permit(:school_id, recipient_ids: [], gifts_ids: [])
+    params.require(:order).permit(:school_id, recipient_ids: [], gift_ids: [])
   end
 
   def change_status(status)

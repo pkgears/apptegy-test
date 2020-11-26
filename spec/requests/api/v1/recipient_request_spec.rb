@@ -9,6 +9,7 @@ RSpec.describe 'Recipients', type: :request do
   let(:valid_params) do
     {
       name: 'Recipient Test',
+      email: Faker::Internet.email,
       school_id: create(:school).id,
       address_attributes: attributes_for(:address)
     }

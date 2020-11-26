@@ -43,7 +43,7 @@ class Api::V1::RecipientsController < Api::V1::ApplicationController
   end
 
   def recipient_with_address_params
-    params.require(:recipient).permit(:name, :school_id, address_attributes: %i[address city state zip])
+    params.require(:recipient).permit(:name, :email, :school_id, address_attributes: %i[address city state zip])
   end
 
   def recipient_params

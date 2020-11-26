@@ -19,6 +19,7 @@ class Order < ApplicationRecord
   belongs_to :school
 
   validate :number_of_recipients
+  validate :number_of_gifts
 
   before_update :can_update?
 
@@ -36,5 +37,10 @@ class Order < ApplicationRecord
 
   def number_of_recipients
     errors.add(:recipients, 'number of recipients exceeded. 20 is the limit allowed.') if recipients.size > 20
+    errors.add(:recipients, 'order should has almost one recipient') if recipients.empty?
+  end
+
+  def number_of_gifts
+    errors.add(:gifts, 'order should has almost one gift') if gifts.empty?
   end
 end
