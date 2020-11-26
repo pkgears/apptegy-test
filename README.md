@@ -9,6 +9,7 @@ Rails version ```6.0.3```
 
 1- Install depedencies with
     ```bundle install```
+
 2- Setup postgres database 
  ```
     rails db:create
