@@ -18,6 +18,8 @@ class Order < ApplicationRecord
   has_and_belongs_to_many :recipients
   belongs_to :school
 
+  validate :number_of_recipients
+
   before_update :can_update?
 
   enum status: %w[ORDER_RECEIVED ORDER_PROCESSING ORDER_SHIPPED ORDER_CANCELLED]
@@ -30,5 +32,9 @@ class Order < ApplicationRecord
       throw :abort
     end
     true
+  end
+
+  def number_of_recipients
+    errors.add(:recipients, 'number of recipients exceeded. 20 is the limit allowed.') if recipients.size > 20
   end
 end

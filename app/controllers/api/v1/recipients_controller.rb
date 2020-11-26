@@ -5,7 +5,7 @@ class Api::V1::RecipientsController < Api::V1::ApplicationController
   before_action :set_recipient, only: %i[show update destroy]
 
   def index
-    @recipients = Recipient.all.include(:address, :school)
+    @recipients = Recipient.all.includes(:address, :school)
     render json: @recipients, each_serializer: Api::V1::RecipientSerializer
   end
 

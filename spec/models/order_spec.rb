@@ -3,7 +3,7 @@
 # Table name: orders
 #
 #  id         :bigint           not null, primary key
-#  status     :integer          default("ORDER_RECEIVED")
+#  status     :integer          default('ORDER_RECEIVED")
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #  school_id  :bigint
@@ -22,9 +22,26 @@ RSpec.describe Order, type: :model do
     it { should have_and_belong_to_many(:recipients) }
     it { should belong_to(:school) }
   end
-
+  
   describe 'enums' do
     it { should define_enum_for(:status).with_values(%w[ORDER_RECEIVED ORDER_PROCESSING ORDER_SHIPPED ORDER_CANCELLED]) }
+  end
+
+  describe '#number_of_recipients' do
+    before do
+      @recipients = create_list(:recipient, 21)
+      @school = create(:school)
+    end
+
+    it 'should return error of recipients limit exceeded' do
+      order = Order.new(school: @school, recipient_ids: @recipients.map(&:id))
+      expect(order.valid?).to be(false)
+    end
+
+    it 'should return a valid  order' do
+      order = Order.new(school: @school, recipient_ids: @recipients.first(5).map(&:id))
+      expect(order.valid?).to be(true)
+    end
   end
 
   describe '#can_update?' do
