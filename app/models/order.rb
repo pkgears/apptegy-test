@@ -22,8 +22,13 @@ class Order < ApplicationRecord
   validate :number_of_gifts
 
   before_update :can_update?
+  after_update :send_mail
 
   enum status: %w[ORDER_RECEIVED ORDER_PROCESSING ORDER_SHIPPED ORDER_CANCELLED]
+
+  def send_mail
+    OrdersMailer.with(order: self).order_shipped if ORDER_SHIPPED?
+  end
 
   private
 

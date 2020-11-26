@@ -1,0 +1,9 @@
+<h1> Hi! <%= @recipient.name %></h1>
+
+<p>You has an order shipped from <%= @order.school.name %> with the next gitfs</p>
+
+<ul>
+  <% @order.gifts.each do |gift| %>
+    <li><%= gift.name %></li>
+  <% end %>
+</ul>
