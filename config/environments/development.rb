@@ -54,8 +54,8 @@ Rails.application.configure do
   config.action_mailer.default_options = { from: 'no-reply <hi@til.codes>' }
   config.action_mailer.delivery_method = :letter_opener_web
   # config.action_mailer.perform_deliveries = true
+  LetterOpenerWeb.configure do |config|
+    config.letters_location = Rails.root.join('tmp', 'mailer')
+  end
 end
 
-LetterOpenerWeb.configure do |config|
-  config.letters_location = Rails.root.join('tmp', 'mailer')
-end

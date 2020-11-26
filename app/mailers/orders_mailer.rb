@@ -14,6 +14,6 @@ class OrdersMailer < ApplicationMailer
   def email_to_recipient(order, recipient)
     @recipient = recipient
     @order = order
-    mail(to: @recipient.email, subject: 'You has an order shipped').deliver!
+    mail(to: @recipient.email, subject: 'You has an order shipped').deliver
   end
 end

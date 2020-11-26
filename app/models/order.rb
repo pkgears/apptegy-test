@@ -27,7 +27,7 @@ class Order < ApplicationRecord
   enum status: %w[ORDER_RECEIVED ORDER_PROCESSING ORDER_SHIPPED ORDER_CANCELLED]
 
   def send_mail
-    OrdersMailer.with(order: self).order_shipped if ORDER_SHIPPED?
+    OrdersJob.perform_now(Order.last) if ORDER_SHIPPED?
   end
 
   private
